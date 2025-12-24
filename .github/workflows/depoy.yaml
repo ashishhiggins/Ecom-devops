@@ -23,7 +23,7 @@ jobs:
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
           
       - name: Deploy to Azure Container App
-        uses: azure/container-apps-deploy@v1
+        uses: azure/container-apps-deploy-action@v1
         with:
           imageToDeploy: ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
           resourceGroup: ${{ secrets.RESOURCE_GROUP }}
