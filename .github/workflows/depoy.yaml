@@ -28,6 +28,6 @@ jobs:
           imageToDeploy: ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
           resourceGroup: ${{ secrets.RESOURCE_GROUP }}
           containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
-          containerAppEnvironmentName: ${{ secrets.CONTAINER_APP_ENV }}
+          containerAppEnvironment: ${{ secrets.CONTAINER_APP_ENV }}
           targetPort: 8080
           ingress: external
