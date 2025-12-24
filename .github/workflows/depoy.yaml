@@ -1,0 +1,33 @@
+name: Deploy
+on:
+  push:
+    branches: ["main"]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to ACR
+        run: az acr login --name ${{ secrets.ACR_NAME }}
+
+      - name: Build and push image to ACR
+        run: |
+          docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
+          
+      - name: Deploy to Azure Container App
+        uses: azure/container-apps-deploy@v1
+        with:
+          imageToDeploy: ${{ secrets.ACR_NAME }}.azurecr.io/java-app:${{ github.sha }}
+          resourceGroup: ${{ secrets.RESOURCE_GROUP }}
+          containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
+          containerAppEnvironmentName: ${{ secrets.CONTAINER_APP_ENV }}
+          targetPort: 8080
+          ingress: external

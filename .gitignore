@@ -1,0 +1,9 @@
+target/
+.mvn/wrapper/maven-wrapper.jar
+.idea/
+.vscode/
+terraform/.terraform/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
