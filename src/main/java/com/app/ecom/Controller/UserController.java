@@ -3,16 +3,18 @@ package com.app.ecom.Controller;
 import com.app.ecom.entity.User;
 import com.app.ecom.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
+
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/users")
